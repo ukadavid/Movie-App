@@ -1,36 +1,12 @@
-FROM node:18-alpine AS build
+FROM node:16-alpine
 
 WORKDIR /app
 
 COPY . .
 
-RUN yarn
+COPY package*.json yarn.lock ./
 
-RUN yarn add typescript
-
-RUN yarn tsc
-
-FROM node:18-alpine AS app
-
-WORKDIR /app
-
-COPY --from=build /app/dist ./dist
-
-COPY package.json .
-
-COPY package-lock.json .
-
-RUN yarn --production
-
-COPY bin ./bin
-
-COPY .env ./env
-
-COPY public ./public
-
-COPY views ./views
-
-COPY movieDatabase.sqlite ./movieDatabase.sqlite
+RUN yarn 
 
 CMD ["node", "bin/www"]
 
