@@ -2,7 +2,7 @@ import express, {Response, Request, NextFunction} from 'express';
 import { auth } from '../middleware/auth';
 import { v4 as uuidv4 } from 'uuid';
 import { MovieInstance } from '../model/movieModels';
-import { createMovieSchema, options } from '../utils/utils';
+import { createMovieSchema, options, updateMovieSchema } from '../utils/utils';
 import { UserInstance } from '../model/userModel';
 
 const router = express.Router()
@@ -133,5 +133,32 @@ router.get("/update/:id", auth, async (req: Request, res: Response) => {
 //     res.status(500).send('Internal server error');
 //   }
 // });
+
+
+router.post('/update/:id', async (req: Request, res: Response) => { 
+  
+  try { 
+    const { id } = req.params; 
+    
+    const { title, description, image, price } = req.body; 
+    
+    const validationResult = updateMovieSchema.validate(req.body, options); 
+    
+    if (validationResult.error) { 
+      res.render("update", { error: validationResult.error.details[0].message, }); 
+    } 
+    
+    const movieList = await MovieInstance.findOne({ where: { id } }) as unknown as any; 
+    
+    if (!movieList) { 
+      
+      res.render('update', { message: 'Movie not found' }); } 
+      
+      await movieList.update({ title, description, image, price }); 
+      
+      return res.redirect('/update'); 
+    } catch (error) {
+       console.log(error); 
+      } });
 
 export default router

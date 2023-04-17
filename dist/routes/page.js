@@ -116,4 +116,23 @@ router.get("/update/:id", auth_1.auth, async (req, res) => {
 //     res.status(500).send('Internal server error');
 //   }
 // });
+router.post('/update/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { title, description, image, price } = req.body;
+        const validationResult = utils_1.updateMovieSchema.validate(req.body, utils_1.options);
+        if (validationResult.error) {
+            res.render("update", { error: validationResult.error.details[0].message, });
+        }
+        const movieList = await movieModels_1.MovieInstance.findOne({ where: { id } });
+        if (!movieList) {
+            res.render('update', { message: 'Movie not found' });
+        }
+        await movieList.update({ title, description, image, price });
+        return res.redirect('/update');
+    }
+    catch (error) {
+        console.log(error);
+    }
+});
 exports.default = router;

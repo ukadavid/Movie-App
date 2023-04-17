@@ -96,6 +96,34 @@
               </div>
             </div>
           </div>
+          <div class="modal fade" id="update-movie-modal" tabindex="-1" aria-labelledby="update-movie-modal-label" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="update-movie-modal-label">Update Movie</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form action="/update/<%= movie.id %>" method="POST">
+                    <div class="mb-3">
+                      <input type="text" class="form-control" placeholder="Title" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                      <textarea class="form-control" placeholder="Description" name="description" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" class="form-control" placeholder="Price" name="price" required>
+                    </div>
+                    <div class="mb-3">
+                      <input type="text" class="form-control" placeholder="Image URL" name="image">
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary"">Update Movie</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         <% }) %>
       </div>
     </div>
@@ -104,36 +132,7 @@
 
 
 <!-- Update modal -->
-<div class="modal fade" id="update-movie-modal" tabindex="-1" aria-labelledby="update-movie-modal-label" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="update-movie-modal-label">Update Movie</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Title" name="title" required>
-          </div>
-          <div class="mb-3">
-            <textarea class="form-control" placeholder="Description" name="description" required></textarea>
-          </div>
-          <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Price" name="price" required>
-          </div>
-          <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Image URL" name="image">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" onclick="updateMovie()">Update Movie</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <footer class=" text-light py-3 fixed-bottom">
   <div class="container">
