@@ -143,7 +143,9 @@ const Login = async (req, res) => {
         if (validUser) {
             return res.redirect('/update');
         }
-        return res.render("login", { error: "Invalid email/password" });
+        else {
+            return res.render("login", { error: "Invalid email/password" });
+        }
     }
     catch (error) {
         console.log(error);

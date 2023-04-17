@@ -124,6 +124,68 @@
               </div>
             </div>
           </div>
+          <!-- Modal Section -->
+<!-- Add Movie Modal -->
+<div class="modal fade" id="add-movie-modal" tabindex="-1" aria-labelledby="add-movie-modal-label" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="add-movie-modal-label">Add Movie</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/update">
+          <div class="mb-3">
+            <% if (locals.error) { %>
+              <% if (error.includes("title is not allowed to be empty")) { %>
+              <p class="error"> title is not allowed to be empty, please fill
+              </p>
+              <% } %>
+         <% } %>
+            <input type="text" class="form-control" placeholder="Title" name="title" required>
+          </div>
+          <div class="mb-3">
+            <% if (locals.error) { %>
+              <% if (error.includes("description is not allowed to be empty")) { %>
+              <p class="error"> description is not allowed to be empty, please fill
+              </p>
+              <% } %>
+         <% } %>
+            <textarea class="form-control" placeholder="Description" name="description" required></textarea>
+          </div>
+          <div class="mb-3">
+         <% if (locals.error) { %>
+          <% if (error === "price is not allowed to be empty") { %>
+          <p class="error"> Price is not allowed to be empty, please fill
+          </p>
+          <% } %>
+     <% } %>
+
+     <% if (locals.error) { %>
+      <% if (error.includes("price must be a number")) { %>
+        <p class="error">Please Input Price as Number</p>
+      <% } %>
+    <% } %>
+            <input type="text" class="form-control" placeholder="Price" name="price" required>
+          </div>
+          <div class="mb-3">
+            <% if (locals.error) { %>
+              <% if (error.includes("image is not allowed to be empty")) { %>
+              <p class="error"> image is not allowed to be empty, please fill
+              </p>
+              <% } %>
+         <% } %>
+            <input type="text" class="form-control" placeholder="Image URL" name="image" accept="image/*" required>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
         <% }) %>
       </div>
     </div>

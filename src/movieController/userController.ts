@@ -152,39 +152,40 @@ export const Register = async (req: Request, res: Response) => {
 
   export const Login = async (req: Request, res: Response) => {
     try {
-        const {email, password} = req.body;
+        const { email, password } = req.body;
         //validate with Joi 
-        const validationResult = loginUserSchema.validate(req.body, options)
+        const validationResult = loginUserSchema.validate(req.body, options);
 
-        if(validationResult.error){
-            return res.render('login', {error: validationResult.error.details[0].message})
+        if (validationResult.error) {
+            return res.render('login', { error: validationResult.error.details[0].message });
         }
-        
+
         const User = await UserInstance.findOne({
             where: { email }
-        }) as unknown as { id: string, password: string }
+        }) as unknown as { id: string, password: string };
 
         if (!User) {
-            return res.render("login", {error:"Invalid email/password"})
+            return res.render("login", { error: "Invalid email/password" });
         }
 
-        const {id} = User
+        const { id } = User;
 
-        const token = jwt.sign({id}, jwtsecret, {expiresIn:"30d"});
+        const token = jwt.sign({ id }, jwtsecret, { expiresIn: "30d" });
 
-        res.cookie("token", token, {httpOnly: true, maxAge:30 * 24 * 60 * 60 * 1000})
+        res.cookie("token", token, { httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000 });
 
-        const validUser = await bcrypt.compare(password, User.password)
+        const validUser = await bcrypt.compare(password, User.password);
 
-        if(validUser){
-            return res.redirect('/update')
+        if (validUser) {
+                return res.redirect('/update');
+        } else {
+            return res.render("login", { error: "Invalid email/password" });
         }
-
-        return res.render("login", {error:"Invalid email/password"})
     } catch (error) {
-      console.log(error)
+        console.log(error);
     }
 }
+
 
 
 export const Logout = async (req:Request, res:Response) => {
